@@ -8,7 +8,7 @@
 ```cpp
 int *p = (int*)malloc(sizeof(int)*100);
 free(p);
-int* a = new int;
+int *a = new int;
 delete a;
 int *q = new int[100];
 delete[] q;
