@@ -20,6 +20,47 @@ const int &z = 20;
 转移语义可以将资源从一个对象转移到另一个对象上，减少不必要的临时对象的创建、拷贝以及销毁。
 
 精确传递就是将一组参数 **原封不动** 的传递给另一个函数，**原封不动** 不仅仅是 **参数值** 不变，还有 **左值/右值** 和 **const/not-const**。
+```cpp
+#include<bits/stdc++.h>
+using namespace std;
+
+void func(int& x) {
+	cout << "左值引用" << endl;
+}
+void func(int&& x) {
+	cout << "右值引用" << endl;
+}
+void func(const int& x) {
+	cout << "const 左值引用" << endl;
+}
+void func(const int&& x) {
+	cout << "const 右值引用" << endl;
+}
+
+template<typename T> void fun(T&& x) {
+	func(forward<T>(x));
+}
+
+int main() {
+	fun(10);
+	
+	int x = 0;
+	fun(x);
+	fun(move(x));
+	
+	const int y = 0;
+	fun(y);
+	fun(move(y));
+    return 0;
+}
+/*
+右值引用
+左值引用
+右值引用
+const 左值引用
+const 右值引用
+*/
+```
 
 ### 左值引用和右值引用的区别
 1. 左值引用表达为 **int&**，右值引用表达为 **int&&**。
