@@ -1,3 +1,4 @@
+~~摸鱼的一天。。~~
 ### $shared\_ptr$ 指针的实现
 ```cpp
 template<typename T> class Shared_ptr {
@@ -51,7 +52,3 @@ public:
 	}
 };
 ```
-
-### 红黑树
-[面试常问：什么是红黑树?](https://blog.csdn.net/qq_36610462/article/details/83277524)
-
