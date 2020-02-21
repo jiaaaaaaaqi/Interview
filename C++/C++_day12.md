@@ -22,7 +22,7 @@ public:
 		use_count = other.use_count;
 		cout << "Created" << endl;
 	}
-	Shared_ptr<T> operator=(const Shared_ptr &other) {
+	Shared_ptr<T>& operator=(const Shared_ptr &other) {
 		if(this == &other)	return *this;
 		(*other.use_count)++;
 		if(ptr && --(*use_count) == 0) {
