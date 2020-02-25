@@ -1,54 +1,24 @@
-~~摸鱼的一天。。~~
-### $shared\_ptr$ 指针的实现
-```cpp
-template<typename T> class Shared_ptr {
-private:
-	T *ptr;
-	int *use_count;	// 用指针保证指向同一块地址
-public:
-	Shared_ptr() {
-		ptr = nullptr;
-		use_count = nullptr;
-		cout << "Created" << endl;
-	}
-	Shared_ptr(T *p){
-		ptr = p;
-		use_count = new int(1);
-		cout << "Created" << endl;
-	}
-	Shared_ptr(const Shared_ptr<T> &other) {
-		ptr = other.ptr;
-		++(*other.use_count);
-		use_count = other.use_count;
-		cout << "Created" << endl;
-	}
-	Shared_ptr<T>& operator=(const Shared_ptr &other) {
-		if(this == &other)	return *this;
-		(*other.use_count)++;
-		if(ptr && --(*use_count) == 0) {
-			delete ptr;
-			delete use_count;
-		}
-		ptr = other.ptr;
-		use_count = other.use_count;
-		return *this;
-	}
-	T& operator*() {	// 返回指针的引用
-		return *ptr;
-	}
-	T* operator->() {
-		return ptr;
-	}
-	int get_use_count() {
-		if(use_count == nullptr)	return 0;
-		return *use_count;
-	}
-	~Shared_ptr() {
-		if(ptr && --(*use_count) == 0) {
-			delete ptr;
-			delete use_count;
-			cout << "Destroy" << endl;
-		}
-	}
-};
-```
+### 构造函数不可以是虚函数
+1. 从存储空间角度，虚函数对应一个虚函数表，而指向虚函数表的虚函数指针是存储区对象内存内的。如果构造函数是虚函数，则需要通过虚函数表来调用，而对象还没有构造出来，无法找到虚函数表。
+2. 从使用角度，虚函数主要用于信息不全的情况下，使子类重写的函数能得到对应的调用。构造函数本身就是要初始化对象，所以用虚函数没有意义。
+
+### 平衡树$(AVL)$、伸展树$(Splay)$、红黑树
+1. 平衡树：
+   1. 优点：查找、插入、删除最坏复杂度都是 $O(logN)$。操作简单。
+   2. 缺点：插入、删除的旋转成本不菲。删除操作后，最多旋转 $O(logN)$ 次，若频繁进行插入、删除操作，得不偿失
+2. 伸展树
+   1. 优点：局部性强: $1)$刚刚访问过的节点，可能在不久后再次被访问到。$2)$ 将要访问的节点，可能在不久之前刚刚被访问的节点附近。
+   2. 缺点：不能保证单次最坏情况的出现，不适用于敏感场合。复杂度不好分析，均摊 $O(logN)$。
+3. 红黑树
+   1. 优点：查找、插入、删除的复杂度都是 $O(logN)$。插入之后最多旋转 $2$ 次，删除之后最多旋转 $1$ 次能够再次达到平衡状态。
+   2. 缺点：左右子树高度相差比 $AVL$ 大。
+
+### $AVL$ 和 红黑树比较
+$AVL$ 是严格的平衡树，因此在插入/删除节点时，根据不同的情况，旋转的次数比红黑树多。
+
+红黑树是弱平衡的，用非严格的平衡换取插入/删除节点时旋转次数的降低。
+
+两者都是平衡树，那么查找的时候，查找效率就会和树的高度有关，所以 $AVL$ 会比红黑树更优。
+
+### 有了 $AVL$ 为什么还要红黑树
+虽然 $AVL$ 解决的二叉查找树退化成链表的情况，但是平衡树要求每个节点左子树和右子树高度相差最多为 $1$。这个要求太严格了，导致插入/删除的时候需要不断的旋转来达到这个要求。而红黑树不会频繁的破坏规则，不用频繁的调整，红黑树是一种不大严格的平衡树，但是换来了效率的提高，是一种折中的方案。
