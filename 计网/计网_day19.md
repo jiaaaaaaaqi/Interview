@@ -41,6 +41,7 @@
 
 ### $TCP$ 首部报文
 ![](TCP首部报文格式.png)
+
 (图片来自 https://blog.csdn.net/qq_32998153/article/details/79680704)
 
 1. 源端口、目的端口：通信发送方和接收方的端口。
@@ -137,6 +138,7 @@ $$
 
 ### $TCP$ 四次挥手
 ![](TCP四次挥手.jpg)
+
 (图片来自 https://blog.51cto.com/fengbaoli/1782250)
 - $Round\ 1：$ 客户端发送连接释放报文段，停止发送数据，主动关闭 $TCP$ 连接。
 $$
