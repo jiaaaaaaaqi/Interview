@@ -38,9 +38,9 @@ int main() {
 		int x;
 		char y;
 	} t;
-	t.x = 0x1234;
-	if(t.y == 0x12)	printf("da duan\n");
-	else	printf("xiao duan\n");
+	t.x = 1;
+	if(t.y == 1)	printf("xiao duan\n");
+	else	printf("da duan\n");
 	return 0;
 }
 ```
