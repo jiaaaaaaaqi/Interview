@@ -104,3 +104,8 @@ vector<int> sortArray(vector<int>& nums) {
 3. $inline$ 是函数，$define$ 不是函数。
 4. $define$ 最好用括号括起来，不然会产生二义性，$inline$ 不会。
 5. $inline$ 是一个建议，可以不展开，$define$ 一定要展开。
+
+### $inline$ 函数的要求
+1. 含有递归调用的函数不能设置为 $inline$
+2. 循环语句和 $switch$ 语句，无法设置为 $inline$
+3. $inline$ 函数内的代码应很短小。最好不超过５行
