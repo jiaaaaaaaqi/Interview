@@ -77,4 +77,3 @@ $weak\_ptr$ 不能直接指向对象，需要先调用 $lock$，而 $lock$ 会�
 如果存在 $lock$ 就会返回一个指向该对象的 $shared\_ptr$，并且该对象的 $shared\_ptr$ 的引用计数加一。
 
 如果在 $weak\_ptr$ 获得过程中，原本的所有 $shared\_ptr$ 被销毁，那么该对象的生命周期会延长到这个临时 $shared\_ptr$ 销毁为止。
-
