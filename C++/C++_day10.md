@@ -1,4 +1,4 @@
-### 四种 $cast$ 转换
+## 四种 $cast$ 转换
 四种 $cast$ 转换为：$const\_cast、static\_cast、dynamic\_cast、reinterpret\_cast$。
 1. $const\_cast：$ 用于将 $const$ 变量转换成非 $const$。
 2. $static\_cast：$ 用于各种隐式转换，比如非 $const$ 转 $const$、$void*$ 转指针等，能用于多态中向上转化，向下转化能成功但结果未知。
@@ -7,7 +7,7 @@
 
 $C$ 语言的强制转化看起来功能强大，但转化不够准确，不能进行错误检查，不安全。
 
-### 四种智能指针
+## 四种智能指针
 四种智能指针：$auto\_ptr、unique\_ptr、shared\_ptr、weak\_ptr$，第一种已经被 $C$++11 弃用。
 - $unique\_ptr$(替换 $auto\_ptr$) 实现独占式拥有概念。保证同一时间只有一个 $unique\_ptr$ 指针指向某个内存，对于避免内存泄漏很有用。
 - $shared\_ptr$ 实现共享式拥有概念。多个智能指针可以指向相同对象，该对象和其相关资源会在 **"最后一个引用被销毁"** 时释放。

@@ -1,5 +1,5 @@
 ~~摸鱼的一天。。~~
-### $shared\_ptr$ 指针的实现
+## $shared\_ptr$ 指针的实现
 ```cpp
 template<typename T> class Shared_ptr {
 private:
