@@ -100,7 +100,7 @@ vector<int> sortArray(vector<int>& nums) {
 
 ### $inline$ 和 $define$
 1. $inline$ 在编译时展开，$define$ 在预编译时展开。
-2. $inline$ 可以进行类型安全检查，$define$ 只是简单的问题替换。
+2. $inline$ 可以进行类型安全检查，$define$ 只是简单的替换。
 3. $inline$ 是函数，$define$ 不是函数。
 4. $define$ 最好用括号括起来，不然会产生二义性，$inline$ 不会。
 5. $inline$ 是一个建议，可以不展开，$define$ 一定要展开。
