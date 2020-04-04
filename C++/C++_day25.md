@@ -49,69 +49,6 @@ private:
 };
 ```
 
-## $C$++ 内存管理的内存池技术
-每次 $malloc$ 后，都会在分配空间的前后加上 $4$ 个字节的额外 $cookie$。所以一次 $malloc$ 就会浪费 $8$ 字节内存。
-
-通过内存池技术，重载 $new$ 符号，使一开始使分配一大块数据空间，然后在将这部分空间一点一点的分给需要申请内存的对象，这样只会有一次大的 $8$ 字节 $cookie$，可以节省内存。
-```cpp
-
-class Screen{
-public:
-	static void * operator new(size_t size) {
-		Screen *p;
-		if(!freeStore){	// 如果没有可以用的内存空间，则再分配一次
-			size_t chunk = screenChunk * size;
-			freeStore = p = reinterpret_cast<Screen*> (new char[chunk]);	// char 字节为 1
-			for(; p != &freeStore[screenChunk - 1]; ++ p){
-				p -> next = p + 1;
-			}
-			p -> next = NULL;
-		}
-		p = freeStore;
-		freeStore = freeStore -> next;
-		return p;
-	}
-	static void operator delete(void* p) {
-		(static_cast<Screen*>(p))->next = freeStore;	// 把 delete 掉的内存空间直接插入到头部，加快插入时间
-		freeStore = static_cast<Screen*>(p);
-	}
-private:
-    Screen* next;
-    static Screen* freeStore;	// 将可用内存用链表形式存储，存下链表头指针
-    static const int screenChunk;	// 选择一次性分配的内存空间
-private:
-    int i;
-};
-Screen* Screen::freeStore = NULL;
-const int Screen::screenChunk = 24;
-int main() {
-	// freopen("in", "r", stdin);
-	Screen *p[100];
-	for(int i=0; i<100; i++) {
-		p[i] = new Screen;
-	}
-	cout << "size of Screen " << sizeof(Screen) << endl;
-	for(int i=0; i<10; i++) {
-		cout << "address of p[" << i << "] " << p[i] << endl;
-	}
-	return 0;
-}
-/*
-重载 new ：
-size of Screen 8
-address of p[0] 0x7caa18
-address of p[1] 0x7caa20
-address of p[2] 0x7caa28
-address of p[3] 0x7caa30
-address of p[4] 0x7caa38
-address of p[5] 0x7caa40
-address of p[6] 0x7caa48
-address of p[7] 0x7caa50
-address of p[8] 0x7caa58
-address of p[9] 0x7caa60
-*/
-```
-
 ## $memcpy$ 和 $memmove$ 的实现
 $memcpy$ 可以直接通过指针自增赋值，但要求源地址和目的地址无重合。
 ```cpp
