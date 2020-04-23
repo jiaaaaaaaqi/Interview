@@ -100,3 +100,82 @@ ll mod(ll x, ll y) {
 
 ## 为什么 $free$ 时不需要传指针大小
 $free$ 要做的事是归还 $malloc$ 申请的内存空间，而在 $malloc$ 的时候已经记录了申请空间的大小，所以不需要传大小，直接传指针就可以。
+
+## 手写链表实现 $LRU$
+```cpp
+class LRU {
+private:
+	struct Node {
+		int val;
+		Node *pre, *suf;
+		Node() {
+			pre = suf = nullptr;
+		}
+		Node(int _val) {
+			val = _val;
+			pre = suf = nullptr;
+		}
+	};
+	int size;
+	int capacity;
+	Node *head;
+	unordered_map<int, Node*> mp;
+	Node* find(int val) {
+		if(mp.count(val)) {
+			return mp[val];
+		} else {
+			return nullptr;
+		}
+	}
+	void del(Node *node) {
+		if(node == nullptr)	return ;
+		node->pre->suf = node->suf;
+		node->suf->pre = node->pre;
+		mp.erase(node->val);
+		if(node == head)	head = head->suf;
+		size--;
+	}
+	void add(Node *node) {
+		if(head == nullptr) {
+			head = node;
+			head->suf = head;
+			head->pre = head;
+			mp[node->val] = node;
+		} else {
+			node->suf = head;
+			node->pre = head->pre;
+			head->pre = node;
+			node->pre->suf = node;
+			mp[node->val] = node;
+			head = node;
+		}
+		size++;
+	}
+public:
+	LRU() {
+		mp.clear();
+		head = nullptr;
+		size = capacity = 0;
+	}
+	void reverse(int _capacity) {
+		capacity = _capacity;
+	}
+	void insert(int val) {
+		Node *node = new Node(val);
+		Node *selectnode = find(val);
+		del(selectnode);
+		if(size == capacity) {
+			del(head->pre);
+		}
+		add(node);
+	}
+	void view() {
+		Node *p = head;
+		do {
+			cout << p->val << " ";
+			p = p->suf;
+		} while(p != head);
+		cout << endl;
+	}
+}lru;
+```
