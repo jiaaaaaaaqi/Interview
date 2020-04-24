@@ -64,7 +64,7 @@ void TraceNew::Remove(void *p) {
 
 void TraceNew::Dump() {
 	for(auto it : mp) {
-		cout << "0x" << it.first << " " << "memory leak on file: " << it.second.File() << " line: " << it.second.Line() << endl;
+		cout << it.first << " " << "memory leak on file: " << it.second.File() << " line: " << it.second.Line() << endl;
 	}
 }
 
@@ -96,8 +96,8 @@ int main() {
 }
 
 /*
-0x0xa71850 memory leak on file: a.cpp line: 90
-0x0xa719b8 memory leak on file: a.cpp line: 91
+0xa71850 memory leak on file: a.cpp line: 90
+0xa719b8 memory leak on file: a.cpp line: 91
 */
 ```
 
